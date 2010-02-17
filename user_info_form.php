@@ -42,11 +42,10 @@
 		echo "\t\t<input type='hidden' id='posted' name='posted' value='true'>\n";
 			
 			/* Går igenom varje rad och skriver ut motsvarande label/input taggar. Alltså 1. Personnummer, 2. Efternamn, ... */
-			foreach($personal_list as $row){
-				/* Label - Input taggar (med försök till rätt indentering i den genererade html-filen). */
-				echo "\t\t<label for='{$personal_list['id']}'>{$personal_list['text']}</label>\n";
-				echo "\t\t<input type='text' id='{$personal_list['id']}' name='{$personal_list['db_column']}' />";
-			}
+		foreach($personal_list as $row){
+			/* Label - Input taggar (med försök till rätt indentering i den genererade html-filen). */
+			echo "\t\t<label for='{$row['id']}'>{$row['text']}</label>\n";
+			echo "\t\t<input type='text' id='{$row['id']}' name='{$row['db_column']}' />";
 		}
 		/* Submitknapp. */
 		echo "\t\t<label for='submit'></label>";
