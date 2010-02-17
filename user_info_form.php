@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<<??>?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
 	"http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
 
@@ -15,6 +15,8 @@
 	<div id="Personinformation">
 	<?php
 		/* Sätter in data i databasen om någon har fyllt i formuläret. */
+		db_connect();
+		
 		if (isset($_POST['posted'])) {
 			$input = $_POST;
 			$store_personal_info_result = store_applicant($input);

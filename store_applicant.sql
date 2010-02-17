@@ -1,4 +1,4 @@
-INSERT INTO applicants (
+INSERT INTO applicant (
 						personal_number, 
 						surname, 
 						firstname, 
