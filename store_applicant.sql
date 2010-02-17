@@ -1,14 +1,14 @@
 INSERT INTO applicants (
-						personal_code, 
+						personal_number, 
 						surname, 
-						name, 
-						c/o_address, 
-						street_address, 
+						firstname, 
+						co_address, 
+						address, 
 						postal_code, 
 						postal_area 
+						telephone, 
+						mobile,
 						e_mail, 
-						phone_number, 
-						mobile_phone_number
 VALUES (
 						null,
 						null,

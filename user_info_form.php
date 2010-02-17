@@ -22,15 +22,15 @@
 
 		/* En associativ array för att spara hur databaskolumnen, texten, och id:et för css:en hör ihop för varje inmatningsfält */
 		$personal_list = Array(
-						Array('db_column' => "personal_number",		'id' => "personalnumber",	'text' => "Personnummer"),
+						Array('db_column' => "personal_number",		'id' => "personal_number",	'text' => "Personnummer"),
 						Array('db_column' => "surname", 			'id' => "surname",			'text' => "Efternamn"),	
-						Array('db_column' => "first_name", 			'id' => "firstname",		'text' => "Förnamn"),	
-						Array('db_column' => "c_o_address", 		'id' => "co_adress",		'text' => "c/o Adress"),
-						Array('db_column' => "address", 			'id' => "adress",			'text' => "Adress"),
-						Array('db_column' => "postal_code", 		'id' => "postal_code",		'text' => "Zip Code:"),
+						Array('db_column' => "firstname", 			'id' => "firstname",		'text' => "Förnamn"),	
+						Array('db_column' => "co_address", 		'id' => "co_address",		'text' => "c/o Adress"),
+						Array('db_column' => "address", 			'id' => "address",			'text' => "Adress"),
+						Array('db_column' => "postal_code", 		'id' => "postal_code",		'text' => "Postnummer"),
 						Array('db_column' => "postal_area", 		'id' => "postal_area",		'text' => "Postort"),
-						Array('db_column' => "phone_number", 		'id' => "telephone",		'text' => "Telefon"),
-						Array('db_column' => "mobile_phone_number",	'id' => "mobile",			'text' => "Mobiltelefon"),
+						Array('db_column' => "telephone", 		'id' => "telephone",		'text' => "Telefon"),
+						Array('db_column' => "mobile",	'id' => "mobile",			'text' => "Mobiltelefon"),
 						Array('db_column' => "e_mail", 				'id' => "e_mail",			'text' => "E-mail")
 						);
 		
