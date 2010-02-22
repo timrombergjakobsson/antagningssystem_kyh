@@ -13,7 +13,7 @@
     		die('Could not connect: ' . mysql_error());
 
 		}else{
-			echo 'Connected successfully';
+		//	echo 'Connected successfully';
 
 		}
 		return $conn;
@@ -36,7 +36,7 @@
 	 * Funktionen returnerar en boolean där true innebär att intresseanmälan gick att lagra.
 	*/
 	function store_admission_occasion($input) {
-
+		
 		$query1 = "INSERT INTO admission_occasion (
 					id,
 					applicant_personal_number,
@@ -46,14 +46,13 @@
 					)
 				VALUES (
 					NULL,
-					{$input['personal_number']}, 
+					'{$input['personal_number']}', 
 					{$input['admission_id']},
 					{$input['arrival_date']},
 					CURDATE()
 				)";
 
 		$answer = mysql_query($query1, db_connect());
-	    
 		return $answer;
 
 	}
@@ -105,6 +104,7 @@
 	
     function store_form_entry () {
     
+	
         $chosen_educations = array ( 'education_1' => array (
 	 														'priority' => 1, 'education' => $_POST['education_1']));
         
@@ -122,12 +122,12 @@
             
         }
 
-		$admission_occasion_info['admission_id'] = 1;
-		$admission_occasion_info['personal_number'] = 123;
+		$admission_occasion_info['admission_id'] = $_POST['admission_id'];
+		$admission_occasion_info['personal_number'] = $_POST['personal_number'];
 		$admission_occasion_info['arrival_date'] = $_POST['arrival_date'];
 		
-		store_admission_occasion ($admisson_occasion_info);
-
+		store_admission_occasion ($admission_occasion_info);
+		
 		$exploded_educations;
 		$i = 0;
 		foreach($chosen_educations as $looped_education) {
@@ -135,16 +135,12 @@
 			$exploded_educations[$i]['education_name'] = $name;
 			$exploded_educations[$i]['education_city'] = $city;
 			$exploded_educations[$i]['education_id'] = get_education_id($name, $city);
-			echo $exploded_educations[$i]['education_id'];
 			$exploded_educations[$i]['admission_occasion_id'] = get_admission_occasion_id($admission_occasion_info);
 			$exploded_educations[$i]['priority'] = $looped_education['priority'];
 	
 			$i++;
 		}
 		
-	
-		
-
 		
 		foreach ($exploded_educations as $application_to_store) {
 			store_application($application_to_store, $admission_occasion_info);
@@ -157,6 +153,7 @@
 	if ($_POST['submit'] = "spara") {
 		
 		store_form_entry();
+	
 		
 	}
 ?>
@@ -183,17 +180,20 @@
 		<form action="" method="post">
 
 			<fieldset>
-			<legend>Ansökan</legend>
+			<legend>Ans&ouml;kan</legend>
 
-				<label for="arrival_date">Ansökan ankom</label>
-				<input type ="text" id="arrival_date" name="arrival_dates" />
+				<label for="arrival_date">Ans&ouml;kan ankom</label>
+				<input type ="text" id="arrival_date" name="arrival_date" />
 
+				<input type="hidden" id="admission_id" name="admission_id" value="2"/>
+				<input type="hidden" id="personal_number" name="personal_number" value="020202-0202"/>
+				
 				<label for="education_1">Utbildning 1:a prio</label>
 				<select name="education_1" id="education_1">
 					<option>Agile Developer, Stockholm</option>
-					<option>Agile Developer, Göteborg</option>
+					<option>Agile Developer, G&ouml;teborg</option>
 					<option>Energy Consultant, Stockholm</option>
-					<option>Energy Consultant, Malmö</option>
+					<option>Energy Consultant, Malm&ouml;</option>
 					<option>IT Management, Stockholm</option>
 
 				</select>
@@ -202,9 +202,9 @@
 				<select name="education_2" id="education_2">
 					<option>Ingen</option>
 					<option>Agile Developer, Stockholm</option>
-					<option>Agile Developer, Göteborg</option>
+					<option>Agile Developer, G&ouml;teborg</option>
 					<option>Energy Consultant, Stockholm</option>
-					<option>Energy Consultant, Malmö</option>
+					<option>Energy Consultant, Malm&ouml;</option>
 					<option>IT Management, Stockholm</option>
 
 				</select>
@@ -213,14 +213,14 @@
 				<select name="education_3" id="education_3">
 					<option>Ingen</option>
 					<option>Agile Developer, Stockholm</option>
-					<option>Agile Developer, Göteborg</option>
+					<option>Agile Developer, G&ouml;teborg</option>
 					<option>Energy Consultant, Stockholm</option>
-					<option>Energy Consultant, Malmö</option>
+					<option>Energy Consultant, Malm&ouml;</option>
 					<option>IT Management, Stockholm</option>
 
 				</select>
 
-				<label for="basic_eligibility">Grundläggande behörighet</label>
+				<label for="basic_eligibility">Grundl&auml;ggande beh&ouml;righet</label>
 				<select name="basic_eligibility" id="basic_eligibility">
 					<option>Ja</option>
 					<option>Nej</option>
