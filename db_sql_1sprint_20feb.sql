@@ -6,65 +6,6 @@ CREATE SCHEMA IF NOT EXISTS `ad09_reldb4` DEFAULT CHARACTER SET utf8 COLLATE utf
 USE `ad09_reldb4`;
 
 -- -----------------------------------------------------
--- Table `ad09_reldb4`.`admission`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `admission`;
-CREATE TABLE `admission` (
-  `id` INT NOT NULL AUTO_INCREMENT ,
-  `start` DATE NULL ,
-  `stop` DATE NULL ,
-  `last_application_date` DATE NULL ,
-  `last_completion_date` DATE NULL ,
-  `semester_start` DATE NULL ,
-  PRIMARY KEY (`id`) )
-ENGINE = InnoDB COLLATE utf8_bin;
-
-
--- -----------------------------------------------------
--- Table `ad09_reldb4`.`education_start`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `education_start`;
-CREATE TABLE `education_start` (
-  `id` INT NOT NULL AUTO_INCREMENT ,
-  `education_id` INT NOT NULL ,
-  `education_education_start_id` INT NOT NULL ,
-  `admission_id` INT NOT NULL ,
-  PRIMARY KEY (`id`, `education_id`, `education_education_start_id`, `admission_id`) ,
-  INDEX `fk_education_start_education` (`education_id` ASC, `education_education_start_id` ASC) ,
-  INDEX `fk_education_start_admission` (`admission_id` ASC) ,
-  CONSTRAINT `fk_education_start_education`
-    FOREIGN KEY (`education_id` , `education_education_start_id` )
-    REFERENCES `ad09_reldb4`.`education` (`id` , `education_start_id` )
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_education_start_admission`
-    FOREIGN KEY (`admission_id` )
-    REFERENCES `ad09_reldb4`.`admission` (`id` )
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB COLLATE utf8_bin;
-
-
--- -----------------------------------------------------
--- Table `ad09_reldb4`.`education`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `education`;
-CREATE TABLE `education` (
-  `id` INT NOT NULL AUTO_INCREMENT ,
-  `education_start_id` INT NOT NULL ,
-  `city` VARCHAR(45) CHARACTER SET utf8 COLLATE utf8_bin NULL,
-  `name` VARCHAR(45) CHARACTER SET utf8 COLLATE utf8_bin NULL,
-  PRIMARY KEY (`id`, `education_start_id`) ,
-  INDEX `fk_education_education_start` (`education_start_id` ASC) ,
-  CONSTRAINT `fk_education_education_start`
-    FOREIGN KEY (`education_start_id` )
-    REFERENCES `ad09_reldb4`.`education_start` (`id` )
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION )
-ENGINE = InnoDB COLLATE utf8_bin;
-
-
--- -----------------------------------------------------
 -- Table `ad09_reldb4`.`applicant`
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS `applicant`;
@@ -82,6 +23,40 @@ CREATE TABLE `applicant` (
   PRIMARY KEY (`personal_number`) )
 ENGINE = InnoDB CHARACTER SET utf8 COLLATE utf8_bin;
 
+-- -----------------------------------------------------
+-- Table `ad09_reldb4`.`admission`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `admission`;
+CREATE TABLE `admission` (
+  `id` INT NOT NULL AUTO_INCREMENT ,
+  `start` DATE NULL ,
+  `stop` DATE NULL ,
+  `last_application_date` DATE NULL ,
+  `last_completion_date` DATE NULL ,
+  `semester_start` DATE NULL ,
+  PRIMARY KEY (`id`) )
+ENGINE = InnoDB COLLATE utf8_bin;
+
+-- -----------------------------------------------------
+-- Table `ad09_reldb4`.`criterion`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `criterion`;
+CREATE TABLE `criterion` (
+  `id` INT NOT NULL AUTO_INCREMENT ,
+  `description` VARCHAR(45) CHARACTER SET utf8 COLLATE utf8_bin NULL,
+  PRIMARY KEY (`id`) )
+ENGINE = InnoDB CHARACTER SET utf8 COLLATE utf8_bin;
+
+-- -----------------------------------------------------
+-- Table `ad09_reldb4`.`education`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `education`;
+CREATE TABLE `education` (
+  `id` INT NOT NULL AUTO_INCREMENT ,
+  `city` VARCHAR(45) CHARACTER SET utf8 COLLATE utf8_bin NULL,
+  `name` VARCHAR(45) CHARACTER SET utf8 COLLATE utf8_bin NULL,
+  PRIMARY KEY (`id`) )  
+ENGINE = InnoDB CHARACTER SET utf8 COLLATE utf8_bin;
 
 -- -----------------------------------------------------
 -- Table `ad09_reldb4`.`log_entry`
@@ -105,6 +80,30 @@ ENGINE = InnoDB CHARACTER SET utf8 COLLATE utf8_bin;
 
 
 -- -----------------------------------------------------
+-- Table `ad09_reldb4`.`education_start`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `education_start`;
+CREATE TABLE `education_start` (
+  `id` INT NOT NULL AUTO_INCREMENT ,
+  `education_id` INT NOT NULL ,
+  `admission_id` INT NOT NULL ,
+  PRIMARY KEY (`id`) ,
+  INDEX `fk_education_start_education` (`education_id` ASC ) ,
+  INDEX `fk_education_start_admission` (`admission_id` ASC) ,
+  CONSTRAINT `fk_education_start_education`
+    FOREIGN KEY (`education_id`)
+    REFERENCES `ad09_reldb4`.`education` (`id` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_education_start_admission`
+    FOREIGN KEY (`admission_id` )
+    REFERENCES `ad09_reldb4`.`admission` (`id` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB COLLATE utf8_bin;
+
+
+-- -----------------------------------------------------
 -- Table `ad09_reldb4`.`admission_occasion`
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS `admission_occasion`;
@@ -114,7 +113,7 @@ CREATE TABLE `admission_occasion` (
   `applicant_personal_number` VARCHAR(12) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL,
   `registration_date` DATE NULL ,
   `admission_id` INT NOT NULL ,
-  PRIMARY KEY (`id`, `applicant_personal_number`, `admission_id`) ,
+  PRIMARY KEY (`id`) ,
   INDEX `fk_admission_occasion_applicant` (`applicant_personal_number` ASC) ,
   INDEX `fk_admission_occasion_admission` (`admission_id` ASC) ,
   CONSTRAINT `fk_admission_occasion_applicant`
@@ -126,7 +125,7 @@ CREATE TABLE `admission_occasion` (
     FOREIGN KEY (`admission_id` )
     REFERENCES `ad09_reldb4`.`admission` (`id` )
     ON DELETE NO ACTION
-    ON UPDATE NO ACTION   )
+    ON UPDATE NO ACTION )
 ENGINE = InnoDB CHARACTER SET utf8 COLLATE utf8_bin;
 
 
@@ -142,28 +141,23 @@ CREATE TABLE `application` (
   `test_points` DECIMAL(2,1) NULL ,
   `school_points` DECIMAL(3,1) NULL ,
   `admission_occasion_id` INT NOT NULL ,
-  `admission_occasion_applicant_personal_number` VARCHAR(12) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL,
   `selection_points` DECIMAL(3,1) NULL ,
   `university_points` DECIMAL(2,1) NULL ,
   `work_points` DECIMAL(2,1) NULL ,
-  PRIMARY KEY (`id`, `admission_occasion_id`, `admission_occasion_applicant_personal_number`) ,
-  INDEX `fk_application_admission_occasion` (`admission_occasion_id` ASC, `admission_occasion_applicant_personal_number` ASC) ,
+  `education_start_id` INT NOT NULL ,
+  PRIMARY KEY (`id`) ,
+  INDEX `fk_application_admission_occasion` (`admission_occasion_id` ASC),
+  INDEX `fk_application_education_start` (`education_start_id` ASC ) ,
   CONSTRAINT `fk_application_admission_occasion`
-    FOREIGN KEY (`admission_occasion_id` , `admission_occasion_applicant_personal_number` )
-    REFERENCES `ad09_reldb4`.`admission_occasion` (`id` , `applicant_personal_number` )
+    FOREIGN KEY (`admission_occasion_id`)
+    REFERENCES `ad09_reldb4`.`admission_occasion` (`id` )			   
     ON DELETE NO ACTION
-    ON UPDATE NO ACTION    )
-ENGINE = InnoDB CHARACTER SET utf8 COLLATE utf8_bin;
-
-
--- -----------------------------------------------------
--- Table `ad09_reldb4`.`criterion`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `criterion`;
-CREATE TABLE `criterion` (
-  `id` INT NOT NULL AUTO_INCREMENT ,
-  `description` VARCHAR(45) CHARACTER SET utf8 COLLATE utf8_bin NULL,
-  PRIMARY KEY (`id`) )
+    ON UPDATE NO ACTION,
+   CONSTRAINT `fk_application_education_start`
+     FOREIGN KEY (`education_start_id`)
+     REFERENCES `ad09_reldb4`.`education_start` (`id` )
+     ON DELETE NO ACTION
+     ON UPDATE NO ACTION)
 ENGINE = InnoDB CHARACTER SET utf8 COLLATE utf8_bin;
 
 
@@ -174,20 +168,18 @@ DROP TABLE IF EXISTS `application_fulfills_criterion`;
 CREATE TABLE `application_fulfills_criterion` (
   `criterion_id` INT NOT NULL ,
   `application_id` INT NOT NULL ,
-  `application_admission_occasion_id` INT NOT NULL ,
-  `application_admission_occasion_applicant_personal_number` VARCHAR(12) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL,
-  `fulfilled_by` ENUM(' regular', 'real competence', 'exemption') NULL ,
-  PRIMARY KEY (`criterion_id`, `application_id`, `application_admission_occasion_id`, `application_admission_occasion_applicant_personal_number`) ,
+  `fulfilled_by` ENUM('regular', 'real competence', 'exemption') NOT NULL DEFAULT 'regular',
+  PRIMARY KEY (`criterion_id`, `application_id`) ,
   INDEX `fk_criterion_has_application_criterion` (`criterion_id` ASC) ,
-  INDEX `fk_criterion_has_application_application` (`application_id` ASC, `application_admission_occasion_id` ASC, `application_admission_occasion_applicant_personal_number` ASC) ,
+  INDEX `fk_criterion_has_application_application` (`application_id` ASC) ,
   CONSTRAINT `fk_criterion_has_application_criterion`
     FOREIGN KEY (`criterion_id` )
     REFERENCES `ad09_reldb4`.`criterion` (`id` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_criterion_has_application_application`
-    FOREIGN KEY (`application_id` , `application_admission_occasion_id` , `application_admission_occasion_applicant_personal_number` )
-    REFERENCES `ad09_reldb4`.`application` (`id` , `admission_occasion_id` , `admission_occasion_applicant_personal_number` )
+    FOREIGN KEY (`application_id`)
+    REFERENCES `ad09_reldb4`.`application` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION     )
     ENGINE = InnoDB CHARACTER SET utf8 COLLATE utf8_bin;
