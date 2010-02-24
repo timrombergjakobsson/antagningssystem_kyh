@@ -87,10 +87,10 @@
 					)
 				VALUES (
 					'under process',
-					{$application_input['basic_eligibility']},
+					'{$application_input['basic_eligibility']}',
 					{$application_input['priority']},
 					{LAST_INSERT_ID()},
-					{$admission_occasion_input['personal_number']},
+					'{$admission_occasion_input['personal_number']}',
 					{$application_input['education_start_id']},
 					{$application_input['education_id']},
 					{$admission_occasion_input['admission_id']},
