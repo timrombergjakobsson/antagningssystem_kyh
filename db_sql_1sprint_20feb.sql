@@ -117,24 +117,24 @@ ENGINE = InnoDB COLLATE utf8_bin;
 
 
 -- -----------------------------------------------------
--- Table `ad09_reldb4`.`admission_occasion`
+-- Table `ad09_reldb4`.`application_occasion`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `admission_occasion`;
-CREATE TABLE `admission_occasion` (
+DROP TABLE IF EXISTS `application_occasion`;
+CREATE TABLE `application_occasion` (
   `id` INT NOT NULL AUTO_INCREMENT ,
   `arrival_date` DATE NULL ,
   `applicant_personal_number` VARCHAR(12) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL,
   `registration_date` DATE NULL ,
   `admission_id` INT NOT NULL ,
   PRIMARY KEY (`id`) ,
-  INDEX `fk_admission_occasion_applicant` (`applicant_personal_number` ASC) ,
-  INDEX `fk_admission_occasion_admission` (`admission_id` ASC) ,
-  CONSTRAINT `fk_admission_occasion_applicant`
+  INDEX `fk_application_occasion_applicant` (`applicant_personal_number` ASC) ,
+  INDEX `fk_application_occasion_admission` (`admission_id` ASC) ,
+  CONSTRAINT `fk_application_occasion_applicant`
     FOREIGN KEY (`applicant_personal_number` )
     REFERENCES `ad09_reldb4`.`applicant` (`personal_number` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
-  CONSTRAINT `fk_admission_occasion_admission`
+  CONSTRAINT `fk_application_occasion_admission`
     FOREIGN KEY (`admission_id` )
     REFERENCES `ad09_reldb4`.`admission` (`id` )
     ON DELETE NO ACTION
@@ -153,17 +153,17 @@ CREATE TABLE `application` (
   `priority` INT NULL ,
   `test_points` DECIMAL(2,1) NULL ,
   `school_points` DECIMAL(3,1) NULL ,
-  `admission_occasion_id` INT NOT NULL ,
+  `application_occasion_id` INT NOT NULL ,
   `selection_points` DECIMAL(3,1) NULL ,
   `university_points` DECIMAL(2,1) NULL ,
   `work_points` DECIMAL(2,1) NULL ,
   `education_start_id` INT NOT NULL ,
   PRIMARY KEY (`id`) ,
-  INDEX `fk_application_admission_occasion` (`admission_occasion_id` ASC),
+  INDEX `fk_application_application_occasion` (`application_occasion_id` ASC),
   INDEX `fk_application_education_start` (`education_start_id` ASC ) ,
-  CONSTRAINT `fk_application_admission_occasion`
-    FOREIGN KEY (`admission_occasion_id`)
-    REFERENCES `ad09_reldb4`.`admission_occasion` (`id` )			   
+  CONSTRAINT `fk_application_application_occasion`
+    FOREIGN KEY (`application_occasion_id`)
+    REFERENCES `ad09_reldb4`.`application_occasion` (`id` )			   
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
    CONSTRAINT `fk_application_education_start`
