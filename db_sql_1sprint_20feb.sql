@@ -63,13 +63,12 @@ INSERT INTO `education` (
 	`city` ,
 	`name`
 	)
-VALUES (
-	'1', 'Stockholm', 'Agile Developer',
-	'2', 'Göteborg' , 'Agile Developer',
-	'3', 'Stockholm', 'Energy Consultant',
-	'4', 'Malmö'    , 'Energy Consultant',
-	'5', 'Stockholm', 'IT Management'
-	)
+VALUES 
+	('1', 'Stockholm', 'Agile Developer'),
+	('2', 'Göteborg' , 'Agile Developer'),
+	('3', 'Stockholm', 'Energy Consultant'),
+	('4', 'Malmö'    , 'Energy Consultant'),
+	('5', 'Stockholm', 'IT Management');
 
 -- -----------------------------------------------------
 -- Table `ad09_reldb4`.`log_entry`
