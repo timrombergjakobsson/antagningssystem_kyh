@@ -10,7 +10,8 @@ USE `ad09_reldb4`;
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS `applicant`;
 CREATE TABLE `applicant` (
-  `personal_number` VARCHAR(12) NOT NULL ,
+  `id` INT NOT NULL AUTO_INCREMENT ,
+  `personal_number` VARCHAR(12) UNIQUE NOT NULL ,
   `surname` VARCHAR(45) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL ,
   `firstname` VARCHAR(45) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL ,
   `co_address` VARCHAR(45) CHARACTER SET utf8 COLLATE utf8_bin NULL ,
@@ -20,7 +21,7 @@ CREATE TABLE `applicant` (
   `telephone` VARCHAR(45) CHARACTER SET utf8 COLLATE utf8_bin NULL,
   `mobile` VARCHAR(45) CHARACTER SET utf8 COLLATE utf8_bin NULL,
   `e_mail` VARCHAR(45) CHARACTER SET utf8 COLLATE utf8_bin NULL,
-  PRIMARY KEY (`personal_number`) )
+  PRIMARY KEY (`id`) )
 ENGINE = InnoDB CHARACTER SET utf8 COLLATE utf8_bin;
 
 -- -----------------------------------------------------
