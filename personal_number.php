@@ -8,7 +8,7 @@
 
 	<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 	<head>
-		<title>Person nummer</title>
+		<title>Personnummer</title>
 		<link href="style.css" media="screen" type="text/css" rel="stylesheet"/>
 
 	</head>
@@ -24,10 +24,11 @@
 		<form action="" method="post">
 
 			<fieldset>
-			<legend>Skriva person nummer</legend>
+			<legend></legend>
 
-				<label for="personal_number">Person nummer</label>
+				<label for="personal_number">Personnummer</label>
 				<input type ="text" id="personal_number" name="personal_number" />
+				<input type ="submit" name="submit" value="s&ouml;k" />
 
 		</fieldset>	
 		</form>
