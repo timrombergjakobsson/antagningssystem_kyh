@@ -12,7 +12,7 @@
 				WHERE education_id = $education_id
 				AND admission_id = $admission_id";
 		
-		$answer = mysql_query($query, db_connect());
+		$answer = handle_mysql_query($query, db_connect());
 		$row = mysql_fetch_array($answer);
 		$id = $row['id'];
 		return $id;

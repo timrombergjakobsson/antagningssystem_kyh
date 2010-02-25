@@ -14,7 +14,7 @@ function store_applicant($input) {
 					`mobile` = '{$input['mobile']}', 
 					`e_mail` = '{$input['e_mail']}'";
     
-	$answer = mysql_query($query);
+	$answer = handle_mysql_query($query);
     return $answer;
 }
 

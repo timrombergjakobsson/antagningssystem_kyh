@@ -6,7 +6,7 @@
 					FROM admission
 					WHERE semester_start = '2010-08-23'";
 					
-		$result = mysql_query($query, $conn);
+		$result = handle_mysql_query($query, $conn);
 		$answer = mysql_fetch_assoc($result);
 		
 		if (!$answer) {

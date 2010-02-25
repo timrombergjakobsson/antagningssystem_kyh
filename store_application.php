@@ -46,8 +46,8 @@ function store_application($input) {
 			)";
 
 	
-	$answer = mysql_query($query1, db_connect());
+	$answer = handle_mysql_query($query1, db_connect());
 	if ($answer)
-		$answer = mysql_query($query2, db_connect());
+		$answer = handle_mysql_query($query2, db_connect());
     return $answer;
 }
