@@ -150,6 +150,7 @@ CREATE TABLE `application_occasion` (
   `registration_date` DATE NULL ,
   `admission_id` INT NOT NULL ,
   PRIMARY KEY (`id`) ,
+  UNIQUE KEY (`applicant_personal_number`,`admission_id`) ,
   INDEX `fk_application_occasion_applicant` (`applicant_personal_number` ASC) ,
   INDEX `fk_application_occasion_admission` (`admission_id` ASC) ,
   CONSTRAINT `fk_application_occasion_applicant`
