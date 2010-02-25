@@ -1,6 +1,7 @@
 <?php
 	
-	function explode_store_application_details () {
+	//funktionen tar de valda utbildningarna från formuläret och delar upp dem i namn och stad. Returnerar en array som har index för namn, stad och prioritet för varje vald utbildning.
+	function explode_chosen_educations () {
     
 	
         $chosen_educations = array ( 'education_1' => array (
