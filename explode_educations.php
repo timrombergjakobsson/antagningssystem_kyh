@@ -19,10 +19,6 @@
 														'priority' => 3, 'education' => $_POST['education_3']);
             
         }
-
-		$admission_occasion_info['admission_id'] = $_POST['admission_id'];
-		$admission_occasion_info['personal_number'] = $_POST['personal_number'];
-		$admission_occasion_info['arrival_date'] = $_POST['arrival_date'];
 		
 		$exploded_educations;
 		$i = 0;
