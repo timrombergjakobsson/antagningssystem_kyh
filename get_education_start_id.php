@@ -6,7 +6,7 @@
   * Funktionen returnerar utbildningsstart id:et ifall det finns en utbildningsstart med det intaget och utbildningen,
   * annars NULL. 
  */
- function get_applicant_id($education_id,$admission_id) {
+ function get_education_start_id($education_id,$admission_id) {
 		$query = "SELECT id 
 				FROM education_start
 				WHERE education_id = $education_id
