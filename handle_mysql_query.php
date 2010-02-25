@@ -2,7 +2,7 @@
 	
 	/* funktion som hanterar mysql_query errors och returnerar en resultset på dessa*/
 	
-	function handle_myquery ($query) {
+	function handle_mysql_query ($query) {
 	        $result = mysql_query($query);
 	        if (mysql_errno()) {
 		
