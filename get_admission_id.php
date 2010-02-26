@@ -1,5 +1,6 @@
 <?php
 
+	//funktion som hämtar admission_id. Returnerar ett id om sökt admission finns, eller felmeddelande om det 					inte finns.
 	function get_admission_id($conn) {
 		
 		$query = 	"SELECT id

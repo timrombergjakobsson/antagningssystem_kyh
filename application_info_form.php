@@ -1,3 +1,21 @@
+<?php
+
+
+	$conn1 = db_connect();
+	$educations = get_educations($conn1);
+
+	function display_educations ($educations) {
+
+		foreach ($educations as $education) {
+		
+			$options = $options . "<option>{$education['name']}" . ", " . "{$education['city']}</option>";
+		
+		}
+	
+		return $options;
+		
+	}
+?>
 <<??>?xml version="1.0" encoding="UTF-8"?>
 	<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
 		"http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
@@ -14,9 +32,6 @@
 		<h1></h1>
 		<div id="Ans&ouml;kaninformation">
 
-
-
-
 			<form action="" method="post">
 
 				<fieldset>
@@ -29,34 +44,19 @@
 				
 					<label for="education_1">Utbildning 1:a prio</label>
 					<select name="education_1" id="education_1">
-						<option>Agile Developer, Stockholm</option>
-						<option>Agile Developer, G&ouml;teborg</option>
-						<option>Energy Consultant, Stockholm</option>
-						<option>Energy Consultant, Malm&ouml;</option>
-						<option>IT Management, Stockholm</option>
-
+						<?php echo display_educations($educations); ?>
 					</select>
 
 					<label for="education_2">Utbildning 2:a prio</label>
 					<select name="education_2" id="education_2">
 						<option>Ingen</option>
-						<option>Agile Developer, Stockholm</option>
-						<option>Agile Developer, G&ouml;teborg</option>
-						<option>Energy Consultant, Stockholm</option>
-						<option>Energy Consultant, Malm&ouml;</option>
-						<option>IT Management, Stockholm</option>
-
+						<?php echo display_educations($educations); ?>
 					</select>
 
 					<label for="education_3">Utbildning 3:e prio</label>
 					<select name="education_3" id="education_3">
 						<option>Ingen</option>
-						<option>Agile Developer, Stockholm</option>
-						<option>Agile Developer, G&ouml;teborg</option>
-						<option>Energy Consultant, Stockholm</option>
-						<option>Energy Consultant, Malm&ouml;</option>
-						<option>IT Management, Stockholm</option>
-
+						<?php echo display_educations($educations); ?>
 					</select>
 
 					<label for="basic_eligibility">Grundl&auml;ggande beh&ouml;righet</label>

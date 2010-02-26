@@ -12,9 +12,6 @@ function db_connect(){
 			if (!$conn || !$db_selected) {
 	    		die('Could not connect: ' . mysql_error());
 				
-			}else{
-				echo 'Connected successfully';
-				
 			}
 			return $conn;
 		}

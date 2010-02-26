@@ -21,10 +21,11 @@
             
         }
 		
+		
 		$exploded_educations;
 		$i = 0;
 		foreach($chosen_educations as $looped_education) {
-			list($name, $city) = explode("," , $looped_education['education']);
+			list($name, $city) = explode(", " , $looped_education['education']);
 			$exploded_educations[$i]['education_name'] = $name;
 			$exploded_educations[$i]['education_city'] = $city;
 			$exploded_educations[$i]['priority'] = $looped_education['priority'];

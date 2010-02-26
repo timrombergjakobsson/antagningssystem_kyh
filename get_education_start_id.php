@@ -6,14 +6,14 @@
   * Funktionen returnerar utbildningsstart id:et ifall det finns en utbildningsstart med det intaget och utbildningen,
   * annars NULL. 
  */
- function get_education_start_id($education_id,$admission_id) {
+ function get_education_start_id($education_id, $admission_id, $conn) {
 		$query = "SELECT id 
 				FROM education_start
 				WHERE education_id = $education_id
 				AND admission_id = $admission_id";
 		
-		$answer = handle_mysql_query($query, db_connect());
-		$row = mysql_fetch_array($answer);
+		$answer = handle_mysql_query($query, $conn);
+		$row = mysql_fetch_assoc($answer);
 		$id = $row['id'];
 		return $id;
 	}
