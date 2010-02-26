@@ -52,7 +52,7 @@ VALUES (
 	'080808080',
 	'070808080',
 	'testmail@test.com'
-)
+);
 
 
 -- -----------------------------------------------------
@@ -108,6 +108,18 @@ CREATE TABLE `criterion` (
   `description` VARCHAR(45) CHARACTER SET utf8 COLLATE utf8_bin NULL,
   PRIMARY KEY (`id`) )
 ENGINE = InnoDB CHARACTER SET utf8 COLLATE utf8_bin;
+
+-- -----------------------------------------------------
+-- Data for table `ad09_reldb4`.`criterion`
+-- -----------------------------------------------------
+INSERT INTO `criterion` (
+	`id`,
+	`description`
+)
+VALUES 
+	( 42, `Matematik B` ), 
+	( 43, `Engelska B` ),
+	( 44, `Svenska B` );
 
 
 -- -----------------------------------------------------
@@ -196,7 +208,7 @@ VALUES
 	( 6, 2, 66 ),
 	( 7, 3, 66 ),
 	( 8, 4, 66 ),
-	( 9, 5, 66 )
+	( 9, 5, 66 );
 
 
 -- -----------------------------------------------------
@@ -243,7 +255,7 @@ VALUES (
  	'010101-0101',
  	'2010-02-25',
 	66
-)
+);
 
 
 -- -----------------------------------------------------
@@ -298,7 +310,7 @@ INSERT INTO `application` (
 VALUES 
 	( 100, 'in progress', 'yes', 1, NULL, NULL, 22, NULL, NULL, NULL, 5 ),
 	( 101, 'in progress', 'yes', 2, NULL, NULL, 22, NULL, NULL, NULL, 7 ),
-	( 102, 'in progress', 'yes', 3, NULL, NULL, 22, NULL, NULL, NULL, 6 )
+	( 102, 'in progress', 'yes', 3, NULL, NULL, 22, NULL, NULL, NULL, 6 );
 
 
 -- -----------------------------------------------------
