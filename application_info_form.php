@@ -66,7 +66,7 @@
 						<option>Dispens</option>
 					</select>
 
-					<input type="submit" name="submit" value="spara" />
+					<input type="submit" name="submit_application" value="spara" />
 
 
 				</fieldset>	

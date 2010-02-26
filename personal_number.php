@@ -28,7 +28,7 @@
 
 				<label for="personal_number">Personnummer</label>
 				<input type ="text" id="personal_number" name="personal_number" />
-				<input type ="submit" name="submit" value="s&ouml;k" />
+				<input type ="submit" name="submit_personal_number" value="s&ouml;k" />
 
 		</fieldset>	
 		</form>

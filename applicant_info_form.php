@@ -86,7 +86,7 @@
 		}
 		/* Submitknapp. */
 		echo "\t\t<label for='submit'></label>";
-		echo "\t\t<input type='submit' id='submit' name='submit' value='Skicka' />";
+		echo "\t\t<input type='submit' id='submit' name='submit_applicant' value='Skicka' />";
 		
 		echo "\t</fieldset>";	
 		echo "</form>";
