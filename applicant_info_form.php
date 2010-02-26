@@ -14,79 +14,60 @@
 	<h1></h1>
 	<div id="Personinformation">
 	<?php
-
-		function db_connect(){
-	
-			$dbhost = "localhost";
-			$dbuser = "reldb4";
-			$dbpass = "dbPass04";
-			$dbname = "ad09_reldb4";
-
-			$conn = mysql_connect($dbhost, $dbuser, $dbpass);
-			$db_selected = mysql_select_db ($dbname, $conn);
-			if (!$conn || !$db_selected) {
-	    		die('Could not connect: ' . mysql_error());
-				
-			}else{
-				echo 'Tack Stina för att du la in mig:)!';
-				
-			}
-			return $conn;
+		/* Sätter in data i databasen om någon har fyllt i formuläret. */
+		$conn = db_connect();
+		
+		/* Testar genom att skriva in personnummer direkt i här. */
+		$personal_number = $_POST['personal_number'];
+		
+		if (isset($personal_number)) {
+			/* Fulhack!!! Bör vara en egen funktion. */
+			$answer = handle_mysql_query("SELECT * FROM `applicant` WHERE personal_number = '$personal_number'", $conn);
+			$personal_data = mysql_fetch_assoc($answer); // Högst ett resultat.
 		}
-				/* Sätter in data i databasen om någon har fyllt i formuläret. */
-		function store_applicant($input) {
-	
-			$query = "INSERT INTO applicant
-			 SET `personal_number` = '{$input["personal_number"]}',
-				`surname` = '{$input["surname"]}', 
-				`firstname` = '{$input["firstname"]}', 
-				`co_address` = '{$input["co_address"]}', 
-				`address` = '{$input["address"]}', 
-				`postal_code` = '{$input["postal_code"]}',
-				`postal_area` = '{$input["postal_area"]}', 
-				`telephone` =  '{$input["telephone"]}', 
-				`mobile` = '{$input["mobile"]}', 
-				`e_mail` = '{$input["e_mail"]}'";
-    
-			$answer = mysql_query($query, db_connect());
-    		return $answer;
-		}
-
+		
 		if (isset($_POST['posted'])) {
-			$input = $_POST;
-			$store_personal_info_result = store_applicant($input);
+			$personal_data = $_POST;
+			$personal_data['personal_number'] = $personal_number;
+			$store_personal_info_result = store_applicant($personal_data,$conn);
 		}
 
 		/* En associativ array för att spara hur databaskolumnen, texten, och id:et för css:en hör ihop för varje inmatningsfält */
 		$personal_list = Array(
-						Array('db_column' => "personal_number",		'id' => "personal_number",	'text' => "Personnummer"),
-						Array('db_column' => "surname", 			'id' => "surname",			'text' => "Efternamn"),	
-						Array('db_column' => "firstname", 			'id' => "firstname",		'text' => "Förnamn"),	
+						Array('db_column' => "surname", 		'id' => "surname",			'text' => "Efternamn"),	
+						Array('db_column' => "firstname", 		'id' => "firstname",		'text' => "Förnamn"),	
 						Array('db_column' => "co_address", 		'id' => "co_address",		'text' => "c/o Adress"),
-						Array('db_column' => "address", 			'id' => "address",			'text' => "Adress"),
-						Array('db_column' => "postal_code", 		'id' => "postal_code",		'text' => "Postnummer"),
-						Array('db_column' => "postal_area", 		'id' => "postal_area",		'text' => "Postort"),
+						Array('db_column' => "address", 		'id' => "address",			'text' => "Adress"),
+						Array('db_column' => "postal_code", 	'id' => "postal_code",		'text' => "Postnummer"),
+						Array('db_column' => "postal_area", 	'id' => "postal_area",		'text' => "Postort"),
 						Array('db_column' => "telephone", 		'id' => "telephone",		'text' => "Telefon"),
-						Array('db_column' => "mobile",	'id' => "mobile",			'text' => "Mobiltelefon"),
-						Array('db_column' => "e_mail", 				'id' => "e_mail",			'text' => "E-mail")
+						Array('db_column' => "mobile",			'id' => "mobile",			'text' => "Mobiltelefon"),
+						Array('db_column' => "e_mail", 			'id' => "e_mail",			'text' => "E-mail")
 						);
 		
 		/* Formuläret. */
 		echo "<form action='' method='post'>\n";
 		echo "\t<fieldset>\n";
-		echo "\t<legend>Personinformation</legend>\n";
+		echo "\t<legend>Personinformation för $personal_number</legend>\n";
 		/* Ett gömt fält som säger när en användare har  skickat data. */
+		echo "\t\t<input type='hidden' id='personal_number' name='personal_number' value='$personal_number'>\n";
 		echo "\t\t<input type='hidden' id='posted' name='posted' value='true'>\n";
 			
-			/* Går igenom varje rad och skriver ut motsvarande label/input taggar. Alltså 1. Personnummer, 2. Efternamn, ... */
+			/* 	Går igenom varje rad och skriver ut motsvarande label/input taggar. Alltså 
+				1. Personnummer, 2. Efternamn, ... 
+				...
+				<label for='personal_number'>Personnummer</label>
+				<input type='text' id='personal_number' name='personal_number' value='{$personal_data['personal_number']}' />
+				...
+			*/
 		foreach($personal_list as $row){
 			/* Label - Input taggar (med försök till rätt indentering i den genererade html-filen). */
 			echo "\t\t<label for='{$row['id']}'>{$row['text']}</label>\n";
-			echo "\t\t<input type='text' id='{$row['id']}' name='{$row['db_column']}' />";
+			echo "\t\t<input type='text' id='{$row['id']}' name='{$row['db_column']}' value='{$personal_data[$row['db_column']]}' />";
 		}
 		/* Submitknapp. */
 		echo "\t\t<label for='submit'></label>";
-		echo "\t\t<input id ='signup' class='button' type='submit' id='submit' name='submit' value='Skicka' />";
+		echo "\t\t<input type='submit' id='submit' name='submit_applicant' value='Skicka' />";
 		
 		echo "\t</fieldset>";	
 		echo "</form>";

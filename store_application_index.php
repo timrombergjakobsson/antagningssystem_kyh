@@ -18,21 +18,27 @@
 	
 	include('save_application.php');
 	
-	include ('get_educations.php');
+	include('get_educations.php');
 	
-	include('application_info_form.php');
+	include('store_applicant.php');
 	
-
-	
+			
 	//sparar en connection till databasen i $conn som kan användas i vilken funktion som helst.
 	$conn = db_connect();
 	
-	//dummy-personnummer som finns i databasen.
-	$personal_number = "448833-0977";
-	
 	//if-sats som kollar om formuläret har submittats
-	if (isset($_POST['submit_application'])) {
+	if (isset($_POST['submit_personal_number'])) {
+
+		include('applicant_info_form.php');
+
+	} else if(isset($_POST['submit_applicant'])) {
+	
+		store_applicant($_POST, $conn);
+		include('application_info_form.php');
 		
+	} else if (isset($_POST['submit_application'])) {
+		
+		$personal_number = $_POST['personal_number'];
 		$basic_eligibility = $_POST['basic_eligibility'];
 		$arrival_date = $_POST['arrival_date'];
 		
@@ -79,8 +85,8 @@
 		echo "Ans&ouml;kan sparad";
 	
 	} else {
-	
-		echo "Fyll i ans&ouml;kan";
+		
+		include('personal_number.php');
 	
 	}
 	
