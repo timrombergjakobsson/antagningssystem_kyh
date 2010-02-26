@@ -1,3 +1,27 @@
+<?php
+	/* De här include:arna skall tas bort när vi har kopllat in user_info_form in i indexet. */
+	//alla includes inkluderar filer i dokumentet.
+	include('handle_mysql_query.php');
+	
+	include('db_connect.php');
+	
+	include('get_admission_id.php');
+
+	include('store_application_occasion.php');
+	
+	include('get_education_id.php');
+	
+	include('get_education_start_id.php');
+	
+	include('explode_chosen_educations.php');
+	
+	include('get_application_occasion_id.php');
+	
+	include('store_applicant.php');
+	
+	include('save_application.php');
+
+?>
 <<??>?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
 	"http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
@@ -15,22 +39,25 @@
 	<div id="Personinformation">
 	<?php
 		/* Sätter in data i databasen om någon har fyllt i formuläret. */
-		db_connect();
+		$conn = db_connect();
+		
+		/* Testar genom att skriva in personnummer direkt i här. SKALL TAS BORT!!! */
+		$personal_number = "123";
 		
 		if (isset($personal_number)) {
 			/* Fulhack!!! Bör vara en egen funktion. */
 			$answer = handle_mysql_query("SELECT * FROM `applicant` WHERE personal_number = '$personal_number'", $conn);
-			$$personal_data = mysql_fetch_assoc($answer); // Högst ett resultat.
+			$personal_data = mysql_fetch_assoc($answer); // Högst ett resultat.
 		}
 		
 		if (isset($_POST['posted'])) {
 			$personal_data = $_POST;
-			$store_personal_info_result = store_applicant($personal_data);
+			$personal_data['personal_number'] = $personal_number;
+			$store_personal_info_result = store_applicant($personal_data,$conn);
 		}
 
 		/* En associativ array för att spara hur databaskolumnen, texten, och id:et för css:en hör ihop för varje inmatningsfält */
 		$personal_list = Array(
-						Array('db_column' => "personal_number",	'id' => "personal_number",	'text' => "Personnummer"),
 						Array('db_column' => "surname", 		'id' => "surname",			'text' => "Efternamn"),	
 						Array('db_column' => "firstname", 		'id' => "firstname",		'text' => "Förnamn"),	
 						Array('db_column' => "co_address", 		'id' => "co_address",		'text' => "c/o Adress"),
@@ -45,7 +72,7 @@
 		/* Formuläret. */
 		echo "<form action='' method='post'>\n";
 		echo "\t<fieldset>\n";
-		echo "\t<legend>Personinformation</legend>\n";
+		echo "\t<legend>Personinformation för $personal_number</legend>\n";
 		/* Ett gömt fält som säger när en användare har  skickat data. */
 		echo "\t\t<input type='hidden' id='posted' name='posted' value='true'>\n";
 			
