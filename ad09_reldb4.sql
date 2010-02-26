@@ -24,6 +24,37 @@ CREATE TABLE `applicant` (
   PRIMARY KEY (`id`) )
 ENGINE = InnoDB CHARACTER SET utf8 COLLATE utf8_bin;
 
+
+-- -----------------------------------------------------
+-- Data for table `ad09_reldb4`.`applicant`
+-- -----------------------------------------------------
+
+INSERT INTO `applicant` (
+	`personal_number`, 
+	`surname`, 
+	`firstname`, 
+	`co_address`, 
+	`address`, 
+	`postal_code`, 
+	`postal_area`, 
+	`telephone`, 
+	`mobile`, 
+	`e_mail`
+)
+VALUES (
+	'010101-0101',
+	'Svennson',
+	'Olle',
+	'',
+	'testvägen 1',
+	'14753',
+	'Stockholm',
+	'080808080',
+	'070808080',
+	'testmail@test.com'
+)
+
+
 -- -----------------------------------------------------
 -- Table `ad09_reldb4`.`admission`
 -- -----------------------------------------------------
@@ -42,7 +73,7 @@ ENGINE = InnoDB COLLATE utf8_bin;
 -- Data for table `ad09_reldb4`.`admission`
 -- -----------------------------------------------------
 
-INSERT INTO  `ad09_reldb4`.`admission` (
+INSERT INTO `admission` (
 	`id` ,
 	`start` ,
 	`stop` ,
@@ -51,14 +82,21 @@ INSERT INTO  `ad09_reldb4`.`admission` (
 	`semester_start`
 )
 VALUES (
-	NULL , 
+	66 , 
 	NULL , 
 	NULL , 
 	NULL , 
 	NULL ,  
 	'2010-08-23'
+	), 
+	(
+	1 , 
+	NULL , 
+	NULL , 
+	NULL , 
+	NULL ,  
+	'2009-08-23'
 );
-
 
 
 -- -----------------------------------------------------
@@ -71,6 +109,7 @@ CREATE TABLE `criterion` (
   PRIMARY KEY (`id`) )
 ENGINE = InnoDB CHARACTER SET utf8 COLLATE utf8_bin;
 
+
 -- -----------------------------------------------------
 -- Table `ad09_reldb4`.`education`
 -- -----------------------------------------------------
@@ -82,17 +121,22 @@ CREATE TABLE `education` (
   PRIMARY KEY (`id`) )  
 ENGINE = InnoDB CHARACTER SET utf8 COLLATE utf8_bin;
 
+-- -----------------------------------------------------
+-- Data for table `ad09_reldb4`.`education`
+-- -----------------------------------------------------
+
 INSERT INTO `education` (
 	`id` ,
 	`city` ,
 	`name`
 	)
 VALUES 
-	('1', 'Stockholm', 'Agile Developer'),
-	('2', 'Göteborg' , 'Agile Developer'),
-	('3', 'Stockholm', 'Energy Consultant'),
-	('4', 'Malmö'    , 'Energy Consultant'),
-	('5', 'Stockholm', 'IT Management');
+	(1, 'Stockholm', 'Agile Developer'),
+	(2, 'Göteborg' , 'Agile Developer'),
+	(3, 'Stockholm', 'Energy Consultant'),
+	(4, 'Malmö'    , 'Energy Consultant'),
+	(5, 'Stockholm', 'IT Management');
+
 
 -- -----------------------------------------------------
 -- Table `ad09_reldb4`.`log_entry`
@@ -138,6 +182,22 @@ CREATE TABLE `education_start` (
     ON UPDATE NO ACTION)
 ENGINE = InnoDB COLLATE utf8_bin;
 
+-- -----------------------------------------------------
+-- Data for table `ad09_reldb4`.`education_start`
+-- -----------------------------------------------------
+
+INSERT INTO `education_start` (
+	`id`,
+ 	`education_id`,
+ 	`admission_id`
+	)
+VALUES 
+	( 5, 1, 66 ),
+	( 6, 2, 66 ),
+	( 7, 3, 66 ),
+	( 8, 4, 66 ),
+	( 9, 5, 66 )
+
 
 -- -----------------------------------------------------
 -- Table `ad09_reldb4`.`application_occasion`
@@ -165,6 +225,26 @@ CREATE TABLE `application_occasion` (
     ON UPDATE NO ACTION )
 ENGINE = InnoDB CHARACTER SET utf8 COLLATE utf8_bin;
 
+-- -----------------------------------------------------
+-- Data for table `ad09_reldb4`.`application_occasion`
+-- -----------------------------------------------------
+
+INSERT INTO `application_occasion` (
+	`id`, 	
+	`arrival_date`, 	
+	`applicant_personal_number`, 	
+	`registration_date`, 	
+	`admission_id`
+	
+)
+VALUES (
+	22,
+	'2010-02-25',
+ 	'010101-0101',
+ 	'2010-02-25',
+	66
+)
+
 
 -- -----------------------------------------------------
 -- Table `ad09_reldb4`.`application`
@@ -172,7 +252,7 @@ ENGINE = InnoDB CHARACTER SET utf8 COLLATE utf8_bin;
 DROP TABLE IF EXISTS `application`;
 CREATE TABLE `application` (
   `id` INT NOT NULL AUTO_INCREMENT ,
-  `status` ENUM('admitted','not admitted','declined','reserve','non eligibile','admitted somewhere else') NULL ,
+  `status` ENUM('in progress','admitted','not admitted','declined','reserve','non eligibile','admitted somewhere else') NULL ,
   `basic_eligibility` ENUM('yes','no','exemption') NULL ,
   `priority` INT NULL ,
   `test_points` DECIMAL(2,1) NULL ,
@@ -196,6 +276,29 @@ CREATE TABLE `application` (
      ON DELETE NO ACTION
      ON UPDATE NO ACTION)
 ENGINE = InnoDB CHARACTER SET utf8 COLLATE utf8_bin;
+
+-- -----------------------------------------------------
+-- Data for table `ad09_reldb4`.`application`
+-- -----------------------------------------------------
+
+INSERT INTO `application` (
+	`id`,
+ 	`status`,
+ 	`basic_eligibility`,
+ 	`priority`,
+ 	`test_points`,
+ 	`school_points`,
+ 	`application_occasion_id`,
+ 	`selection_points`,
+ 	`university_points`,
+ 	`work_points`,
+ 	`education_start_id`
+	
+)
+VALUES 
+	( 100, 'in progress', 'yes', 1, NULL, NULL, 22, NULL, NULL, NULL, 5 ),
+	( 101, 'in progress', 'yes', 2, NULL, NULL, 22, NULL, NULL, NULL, 7 ),
+	( 102, 'in progress', 'yes', 3, NULL, NULL, 22, NULL, NULL, NULL, 6 )
 
 
 -- -----------------------------------------------------
