@@ -10,14 +10,12 @@ function save_application($application_input,$conn) {
 	
 	// Översätter de olika svenska alternativen 'Ja','Nej','Dispens' till 'yes','no','exemption'
 	if ($application_input['basic_eligibility'] == "Ja") {
-		$application_input['basic_eligibility'] = "yes";
+		$basic = "yes";
 	} elseif ($application_input['basic_eligibility'] == "Nej") {
-		$application_input['basic_eligibility'] = "no";
+		$basic = "no";
 	} elseif ($application_input['basic_eligibility'] == "Dispens") {
-		$application_input['basic_eligibility'] = "exemption";
-	} else {
-		$application_input['basic_eligibility'] = "";
-	}	
+		$basic = "exemption";
+	}
 	
 	$application_occasion_id = get_application_occasion_id($application_input['personal_number'], $admission_id);
 	$education_start_id = get_education_start_id($education_id, $admission_id);
@@ -25,7 +23,7 @@ function save_application($application_input,$conn) {
 	$query = "INSERT INTO application (status, basic_eligibility, priority, application_occasion_id, education_start_id)
 			VALUES (
 				'in progress',
-				'{$application_input['basic_eligibility']}',
+				'$basic',
 				'{$application_input['priority']}',
 				$application_occasion_id,
 				$education_start_id
