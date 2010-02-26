@@ -28,7 +28,7 @@
 	    		die('Could not connect: ' . mysql_error());
 				
 			}else{
-				echo 'Connected successfully';
+				echo 'Tack Stina för att du la in mig:)!';
 				
 			}
 			return $conn;
@@ -86,7 +86,7 @@
 		}
 		/* Submitknapp. */
 		echo "\t\t<label for='submit'></label>";
-		echo "\t\t<input type='submit' id='submit' name='submit_applicant' value='Skicka' />";
+		echo "\t\t<input id ='signup' class='button' type='submit' id='submit' name='submit' value='Skicka' />";
 		
 		echo "\t</fieldset>";	
 		echo "</form>";
