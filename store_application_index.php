@@ -5,21 +5,17 @@
 	include('db_connect.php');
 	
 	include('get_admission_id.php');
-
-	include('store_application_occasion.php');
-	
 	include('get_education_id.php');
-	
 	include('get_education_start_id.php');
-	
+	include('get_application_occasion_id.php');
+
+	include('get_admissions.php');
+	include('get_educations.php');
+		
 	include('explode_chosen_educations.php');
 	
-	include('get_application_occasion_id.php');
-	
 	include('save_application.php');
-	
-	include('get_educations.php');
-	
+	include('store_application_occasion.php');
 	include('store_applicant.php');
 	
 			
@@ -76,12 +72,10 @@
 		}
 		
 		foreach ($education_starts as $e_s) {
-			
+		
 			save_application($e_s, $basic_eligibility, $application_occasion_id, $conn);
 			
 		}
-		
-		
 		
 		echo "Ans&ouml;kan sparad";
 	
@@ -90,7 +84,3 @@
 		include('personal_number.php');
 	
 	}
-	
-	
-	
-	
