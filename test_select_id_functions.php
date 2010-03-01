@@ -2,6 +2,9 @@
 		include_once("get_education_id.php");
 		include_once("get_education_start_id.php");
 		include_once("get_applicant_id.php");
+		include_once("store_admission_details.php");
+		include_once("handle_mysql_query.php");
+		include_once("get_admission_id.php");
 ?>
 <<??>?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
@@ -34,49 +37,73 @@
 			return $conn;
 		}
 		
+		$conn = db_connect();
+
+		/* get_admission_id */
+		$input_adm = Array('year' => '1900','semester' => 'QT');
+		echo "Using the input '1900','QT' <br \>";
+		echo get_admission_id($input_adm,$conn);
+		echo "<br \>";
+
+		/* get_admission_id */
+		$input_adm = Array('year' => 2010,'semester' => 'HT');
+		echo "Using the input '2010','VT' <br \>";
+		echo get_admission_id($input_adm,$conn);
+		echo "<br \>";		
+
+		/* store_admission_details */
+		$input = Array('last_application_date' => '2010-08-23',
+						'last_completion_date' => '2011-08-23',
+						'year' => 2010,
+						'semester' => 'HT');
+		echo "Using the input '2010-08-23,2011-08-23,2010,VT' <br \>";
+		echo store_admission_details($input,$conn);
+		echo "<br \>";
+		echo handle_mysql_query("SELECT * FROM `admission`",$conn);		
+
 		/* Education_start_id */
-		echo "Education_start_id med education id 1 och admission id 66 \n förväntat resultat 3 \n";
-		echo get_education_start_id(1,66);
-		echo "\n";
+		echo "Education_start_id med education id 1 och admission id 66 <br \> förväntat resultat 3 <br \>";
+		echo get_education_start_id(1,66,$conn);
+		echo "<br \>";
 		
-		echo "Education_start_id med education id 1 och admission id 55\nförväntat resultat NULL\n";
-		echo get_education_start_id(1,55);
-		echo "\n";
+		echo "Education_start_id med education id 1 och admission id 55<br \>förväntat resultat NULL<br \>";
+		echo get_education_start_id(1,55,$conn);
+		echo "<br \>";
 		
-		echo "Education_start_id med education id 2 och admission id 66\nförväntat resultat NULL\n";
-		echo get_education_start_id(2,66);
-		echo "\n";
+		echo "Education_start_id med education id 2 och admission id 66<br \>förväntat resultat NULL<br \>";
+		echo get_education_start_id(2,66,$conn);
+		echo "<br \>";
 		
 		/* Applicant_id */
-		echo "Applicant_id med personal_number '5566677'\nförväntat resultat 2\n";
-		echo get_applicant_id('5566677');
-		echo "\n";
+		echo "Applicant_id med personal_number '5566677'<br \>förväntat resultat 2<br \>";
+		echo get_applicant_id('5566677',$conn);
+		echo "<br \>";
 		
-		echo "Applicant_id med personal_number '4488330977'\nförväntat resultat 1\n";
-		echo get_applicant_id('4488330977');
-		echo "\n";
+		echo "Applicant_id med personal_number '4488330977'<br \>förväntat resultat 1<br \>";
+		echo get_applicant_id('4488330977',$conn);
+		echo "<br \>";
 		
-		echo "Applicant_id med personal_number ''\nförväntat resultat NULL\n";
-		echo get_applicant_id('');
-		echo "\n";
+		echo "Applicant_id med personal_number ''<br \>förväntat resultat NULL<br \>";
+		echo get_applicant_id('',$conn);
+		echo "<br \>";
 		
-		echo "Applicant_id med personal_number '\' OR 1;DROP TABLE Applicant_id'\n"; 
-		echo "förväntat resultat NULL (och tabellen kvar)\n";
-		echo get_applicant_id('\' OR 1;DROP TABLE Applicant_id');
-		echo "\n";
+		echo "Applicant_id med personal_number '\' OR 1;DROP TABLE Applicant_id'<br \>"; 
+		echo "förväntat resultat NULL (och tabellen kvar)<br \>";
+		echo get_applicant_id('\' OR 1;DROP TABLE Applicant_id',$conn);
+		echo "<br \>";
 		
 		/* Education_id */
-		echo "Education_id med stad 'Stockholm' och utbildning 'Agile Developer'\nförväntat resultat 1\n";
-		echo get_education_id('Agile Developer','Stockholm');
-		echo "\n";
+		echo "Education_id med stad 'Stockholm' och utbildning 'Agile Developer'<br \>förväntat resultat 1<br \>";
+		echo get_education_id('Agile Developer','Stockholm',$conn);
+		echo "<br \>";
 		
-		echo "Education_id med stad 'Stockholm  ' och utbildning 'Agile Developer'\nförväntat resultat NULL\n";
-		echo get_education_id('Agile Developer','Stockholm   ');
-		echo "\n";
+		echo "Education_id med stad 'Stockholm  ' och utbildning 'Agile Developer'<br \>förväntat resultat NULL<br \>";
+		echo get_education_id('Agile Developer','Stockholm   ',$conn);
+		echo "<br \>";
 		
-		echo "Education_id med stad 'Stockholm' och utbildning 'agile developer'\nförväntat resultat NULL\n";
-		echo get_education_id('agile developer','Stockholm');
-		echo "\n";
+		echo "Education_id med stad 'Stockholm' och utbildning 'agile developer'<br \>förväntat resultat NULL<br \>";
+		echo get_education_id('agile developer','Stockholm',$conn);
+		echo "<br \>";
 	?>
 	</body>
 </html>
