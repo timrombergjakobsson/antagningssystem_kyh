@@ -22,9 +22,7 @@ CREATE TABLE `applicant` (
   `mobile` VARCHAR(45) CHARACTER SET utf8 COLLATE utf8_bin NULL,
   `e_mail` VARCHAR(45) CHARACTER SET utf8 COLLATE utf8_bin NULL,
   PRIMARY KEY (`id`) 
-)
-
-ENGINE = InnoDB CHARACTER SET utf8 COLLATE utf8_bin;
+)ENGINE = InnoDB CHARACTER SET utf8 COLLATE utf8_bin;
 
 
 -- -----------------------------------------------------
@@ -66,14 +64,12 @@ CREATE TABLE `admission` (
   `last_application_date` DATE NULL ,
   `last_completion_date` DATE NULL ,
   `year` INT NULL ,
-  `semester` VARCHAR (10) NULL,
+  `semester` ENUM ('HT', 'VT') DEFAULT 'HT' NULL,
   UNIQUE (`year`, `semester`),
   PRIMARY KEY (`id`),
   INDEX ` admission_year` (`year` ASC),
   INDEX ` admission_semester` (`semester`)
-)
-
-ENGINE = InnoDB CHARACTER SET utf8 COLLATE utf8_bin;
+) ENGINE = InnoDB CHARACTER SET utf8 COLLATE utf8_bin;
 
 
 -- -----------------------------------------------------
@@ -99,7 +95,7 @@ VALUES (
 	NULL , 
 	NULL , 
 	NULL , 
-	NULL ,  
+	NULL   
 );
 
 
@@ -135,9 +131,7 @@ CREATE TABLE `education` (
   `city` VARCHAR(45) CHARACTER SET utf8 COLLATE utf8_bin NULL,
   `name` VARCHAR(45) CHARACTER SET utf8 COLLATE utf8_bin NULL,
   PRIMARY KEY (`id`) 
-)
-  
-ENGINE = InnoDB CHARACTER SET utf8 COLLATE utf8_bin;
+) ENGINE = InnoDB CHARACTER SET utf8 COLLATE utf8_bin;
 
 -- -----------------------------------------------------
 -- Data for table `ad09_reldb4`.`education`
@@ -174,9 +168,7 @@ CREATE TABLE `log_entry` (
     REFERENCES `ad09_reldb4`.`applicant` (`personal_number`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION  
-)
-
-ENGINE = InnoDB CHARACTER SET utf8 COLLATE utf8_bin;
+) ENGINE = InnoDB CHARACTER SET utf8 COLLATE utf8_bin;
 
 
 -- -----------------------------------------------------
@@ -200,9 +192,7 @@ CREATE TABLE `education_start` (
     REFERENCES `ad09_reldb4`.`admission` (`id` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION
-)
-
-ENGINE = InnoDB CHARACTER SET utf8 COLLATE utf8_bin;
+) ENGINE = InnoDB CHARACTER SET utf8 COLLATE utf8_bin;
 
 -- -----------------------------------------------------
 -- Data for table `ad09_reldb4`.`education_start`
@@ -245,9 +235,7 @@ CREATE TABLE `application_occasion` (
     REFERENCES `ad09_reldb4`.`admission` (`id` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION 
-)
-
-ENGINE = InnoDB CHARACTER SET utf8 COLLATE utf8_bin;
+) ENGINE = InnoDB CHARACTER SET utf8 COLLATE utf8_bin;
 
 -- -----------------------------------------------------
 -- Data for table `ad09_reldb4`.`application_occasion`
@@ -298,9 +286,7 @@ CREATE TABLE `application` (
      REFERENCES `ad09_reldb4`.`education_start` (`id` )
      ON DELETE NO ACTION
      ON UPDATE NO ACTION
-)
-
-ENGINE = InnoDB CHARACTER SET utf8 COLLATE utf8_bin;
+) ENGINE = InnoDB CHARACTER SET utf8 COLLATE utf8_bin;
 
 -- -----------------------------------------------------
 -- Data for table `ad09_reldb4`.`application`
@@ -346,9 +332,7 @@ CREATE TABLE `application_fulfills_criterion` (
     REFERENCES `ad09_reldb4`.`application` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION 
-)
-
-    ENGINE = InnoDB CHARACTER SET utf8 COLLATE utf8_bin;
+) ENGINE = InnoDB CHARACTER SET utf8 COLLATE utf8_bin;
 
 
 -- -----------------------------------------------------
@@ -371,9 +355,7 @@ CREATE TABLE `education_start_requires_criterion` (
     REFERENCES `ad09_reldb4`.`criterion` (`id` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION  
-)
-
-    ENGINE = InnoDB CHARACTER SET utf8 COLLATE utf8_bin;
+) ENGINE = InnoDB CHARACTER SET utf8 COLLATE utf8_bin;
 
 
 
