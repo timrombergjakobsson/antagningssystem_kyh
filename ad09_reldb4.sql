@@ -21,7 +21,9 @@ CREATE TABLE `applicant` (
   `telephone` VARCHAR(45) CHARACTER SET utf8 COLLATE utf8_bin NULL,
   `mobile` VARCHAR(45) CHARACTER SET utf8 COLLATE utf8_bin NULL,
   `e_mail` VARCHAR(45) CHARACTER SET utf8 COLLATE utf8_bin NULL,
-  PRIMARY KEY (`id`) )
+  PRIMARY KEY (`id`) 
+)
+
 ENGINE = InnoDB CHARACTER SET utf8 COLLATE utf8_bin;
 
 
@@ -46,7 +48,7 @@ VALUES (
 	'Svennson',
 	'Olle',
 	'',
-	'testvägen 1',
+	'testvÃ¤gen 1',
 	'14753',
 	'Stockholm',
 	'080808080',
@@ -61,13 +63,18 @@ VALUES (
 DROP TABLE IF EXISTS `admission`;
 CREATE TABLE `admission` (
   `id` INT NOT NULL AUTO_INCREMENT ,
-  `start` DATE NULL ,
-  `stop` DATE NULL ,
   `last_application_date` DATE NULL ,
   `last_completion_date` DATE NULL ,
-  `semester_start` DATE NULL ,
-  PRIMARY KEY (`id`) )
-ENGINE = InnoDB COLLATE utf8_bin;
+  `year` INT NULL ,
+  `semester` VARCHAR (10) NULL,
+  UNIQUE (`year`, `semester`),
+  PRIMARY KEY (`id`),
+  INDEX ` admission_year` (`year` ASC),
+  INDEX ` admission_semester` (`semester`)
+)
+
+ENGINE = InnoDB CHARACTER SET utf8 COLLATE utf8_bin;
+
 
 -- -----------------------------------------------------
 -- Data for table `ad09_reldb4`.`admission`
@@ -75,19 +82,17 @@ ENGINE = InnoDB COLLATE utf8_bin;
 
 INSERT INTO `admission` (
 	`id` ,
-	`start` ,
-	`stop` ,
 	`last_application_date` ,
 	`last_completion_date` ,
-	`semester_start`
+	`year` ,
+	`semester`
 )
 VALUES (
 	66 , 
 	NULL , 
-	NULL , 
-	NULL , 
 	NULL ,  
-	'2010-08-23'
+	2009 , 
+	'VT'
 	), 
 	(
 	1 , 
@@ -95,7 +100,6 @@ VALUES (
 	NULL , 
 	NULL , 
 	NULL ,  
-	'2009-08-23'
 );
 
 
@@ -117,9 +121,9 @@ INSERT INTO `criterion` (
 	`description`
 )
 VALUES 
-	( 42, `Matematik B` ), 
-	( 43, `Engelska B` ),
-	( 44, `Svenska B` );
+	( 42, 'Matematik B' ), 
+	( 43, 'Engelska B' ),
+	( 44, 'Svenska B' );
 
 
 -- -----------------------------------------------------
@@ -130,7 +134,9 @@ CREATE TABLE `education` (
   `id` INT NOT NULL AUTO_INCREMENT ,
   `city` VARCHAR(45) CHARACTER SET utf8 COLLATE utf8_bin NULL,
   `name` VARCHAR(45) CHARACTER SET utf8 COLLATE utf8_bin NULL,
-  PRIMARY KEY (`id`) )  
+  PRIMARY KEY (`id`) 
+)
+  
 ENGINE = InnoDB CHARACTER SET utf8 COLLATE utf8_bin;
 
 -- -----------------------------------------------------
@@ -144,9 +150,9 @@ INSERT INTO `education` (
 	)
 VALUES 
 	(1, 'Stockholm', 'Agile Developer'),
-	(2, 'Göteborg' , 'Agile Developer'),
+	(2, 'GÃ¶teborg' , 'Agile Developer'),
 	(3, 'Stockholm', 'Energy Consultant'),
-	(4, 'Malmö'    , 'Energy Consultant'),
+	(4, 'MalmÃ¶'    , 'Energy Consultant'),
 	(5, 'Stockholm', 'IT Management');
 
 
@@ -167,7 +173,9 @@ CREATE TABLE `log_entry` (
     FOREIGN KEY (`applicant_personal_number` )
     REFERENCES `ad09_reldb4`.`applicant` (`personal_number`)
     ON DELETE NO ACTION
-    ON UPDATE NO ACTION  )
+    ON UPDATE NO ACTION  
+)
+
 ENGINE = InnoDB CHARACTER SET utf8 COLLATE utf8_bin;
 
 
@@ -191,8 +199,10 @@ CREATE TABLE `education_start` (
     FOREIGN KEY (`admission_id` )
     REFERENCES `ad09_reldb4`.`admission` (`id` )
     ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB COLLATE utf8_bin;
+    ON UPDATE NO ACTION
+)
+
+ENGINE = InnoDB CHARACTER SET utf8 COLLATE utf8_bin;
 
 -- -----------------------------------------------------
 -- Data for table `ad09_reldb4`.`education_start`
@@ -234,7 +244,9 @@ CREATE TABLE `application_occasion` (
     FOREIGN KEY (`admission_id` )
     REFERENCES `ad09_reldb4`.`admission` (`id` )
     ON DELETE NO ACTION
-    ON UPDATE NO ACTION )
+    ON UPDATE NO ACTION 
+)
+
 ENGINE = InnoDB CHARACTER SET utf8 COLLATE utf8_bin;
 
 -- -----------------------------------------------------
@@ -247,7 +259,6 @@ INSERT INTO `application_occasion` (
 	`applicant_personal_number`, 	
 	`registration_date`, 	
 	`admission_id`
-	
 )
 VALUES (
 	22,
@@ -275,18 +286,20 @@ CREATE TABLE `application` (
   `work_points` DECIMAL(2,1) NULL ,
   `education_start_id` INT NOT NULL ,
   PRIMARY KEY (`id`) ,
-  INDEX `fk_application_application_occasion` (`application_occasion_id` ASC),
+  INDEX `fk_application_application_occasion` (`application_occasion_id` ASC) ,
   INDEX `fk_application_education_start` (`education_start_id` ASC ) ,
   CONSTRAINT `fk_application_application_occasion`
     FOREIGN KEY (`application_occasion_id`)
     REFERENCES `ad09_reldb4`.`application_occasion` (`id` )			   
     ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
+    ON UPDATE NO ACTION ,
    CONSTRAINT `fk_application_education_start`
      FOREIGN KEY (`education_start_id`)
      REFERENCES `ad09_reldb4`.`education_start` (`id` )
      ON DELETE NO ACTION
-     ON UPDATE NO ACTION)
+     ON UPDATE NO ACTION
+)
+
 ENGINE = InnoDB CHARACTER SET utf8 COLLATE utf8_bin;
 
 -- -----------------------------------------------------
@@ -305,7 +318,6 @@ INSERT INTO `application` (
  	`university_points`,
  	`work_points`,
  	`education_start_id`
-	
 )
 VALUES 
 	( 100, 'in progress', 'yes', 1, NULL, NULL, 22, NULL, NULL, NULL, 5 ),
@@ -333,7 +345,9 @@ CREATE TABLE `application_fulfills_criterion` (
     FOREIGN KEY (`application_id`)
     REFERENCES `ad09_reldb4`.`application` (`id`)
     ON DELETE NO ACTION
-    ON UPDATE NO ACTION     )
+    ON UPDATE NO ACTION 
+)
+
     ENGINE = InnoDB CHARACTER SET utf8 COLLATE utf8_bin;
 
 
@@ -351,12 +365,14 @@ CREATE TABLE `education_start_requires_criterion` (
     FOREIGN KEY (`education_start_id` )
     REFERENCES `ad09_reldb4`.`education_start` (`id` )
     ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
+    ON UPDATE NO ACTION ,
   CONSTRAINT `fk_education_start_has_criterion_criterion`
     FOREIGN KEY (`criterion_id` )
     REFERENCES `ad09_reldb4`.`criterion` (`id` )
     ON DELETE NO ACTION
-    ON UPDATE NO ACTION      )
+    ON UPDATE NO ACTION  
+)
+
     ENGINE = InnoDB CHARACTER SET utf8 COLLATE utf8_bin;
 
 
