@@ -42,7 +42,8 @@
 		$basic_eligibility = $_POST['basic_eligibility'];
 		$arrival_date = $_POST['arrival_date'];
 		
-		$admission_id = get_admission_id($conn);
+		$admission_info = array('semester' => 'HT', 'year' => 2010);
+		$admission_id = get_admission_id($admission_info, $conn);
 		
 		store_application_occasion($_POST['arrival_date'], $personal_number, $admission_id, $conn);
 		$application_occasion_id = get_application_occasion_id ($personal_number, $admission_id, $conn);
