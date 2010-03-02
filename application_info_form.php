@@ -3,6 +3,8 @@
 
 	$conn1 = db_connect();
 	$educations = get_educations($conn1);
+	$personal_number = $_POST['personal_number'];
+	$admission_id = $_POST['admission_id'];
 
 	function display_educations ($educations) {
 
@@ -15,6 +17,8 @@
 		return $options;
 		
 	}
+	
+	
 ?>
 <<??>?xml version="1.0" encoding="UTF-8"?>
 	<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
@@ -35,12 +39,10 @@
 			<form action="" method="post">
 
 				<fieldset>
-					<legend>Ans&ouml;kan</legend>
+					<legend>Ans&ouml;kan för <?php echo $personal_number; ?></legend>
 
 					<label for="arrival_date">Ans&ouml;kan ankom</label>
 					<input type ="text" id="arrival_date" name="arrival_date" />
-
-					<input type="hidden" id="admission_id" name="admission_id" value="2"/>
 				
 					<label for="education_1">Utbildning 1:a prio</label>
 					<select name="education_1" id="education_1">
@@ -66,6 +68,8 @@
 						<option>Dispens</option>
 					</select>
 
+					<input type='hidden' id='personal_number' name='personal_number' value='<?php echo $personal_number; ?>' />
+					<input type='hidden' id='admission_id' name='admission_id' value='<?php echo $admission_id; ?>' />
 					<input type="submit" name="submit_application" value="spara" />
 
 

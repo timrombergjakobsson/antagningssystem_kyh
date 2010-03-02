@@ -24,7 +24,7 @@
 	
 	//if-sats som kollar om formuläret har submittats
 	if (isset($_POST['submit_personal_number'])) {
-
+		
 		include('applicant_info_form.php');
 
 	} else if(isset($_POST['submit_applicant'])) {
@@ -37,9 +37,7 @@
 		$personal_number = $_POST['personal_number'];
 		$basic_eligibility = $_POST['basic_eligibility'];
 		$arrival_date = $_POST['arrival_date'];
-		
-		$admission_info = array('semester' => 'HT', 'year' => 2010);
-		$admission_id = get_admission_id($admission_info, $conn);
+		$admission_id = $_POST['admission_id'];
 		
 		store_application_occasion($_POST['arrival_date'], $personal_number, $admission_id, $conn);
 		$application_occasion_id = get_application_occasion_id ($personal_number, $admission_id, $conn);

@@ -19,6 +19,7 @@
 		
 		/* Testar genom att skriva in personnummer direkt i här. */
 		$personal_number = $_POST['personal_number'];
+		$admission_id = $_POST['admission_id'];
 		
 		if (isset($personal_number)) {
 			/* Fulhack!!! Bör vara en egen funktion. */
@@ -51,6 +52,7 @@
 		echo "\t<legend>Personinformation för $personal_number</legend>\n";
 		/* Ett gömt fält som säger när en användare har  skickat data. */
 		echo "\t\t<input type='hidden' id='personal_number' name='personal_number' value='$personal_number'>\n";
+			echo "\t\t<input type='hidden' id='admission_id' name='admission_id' value='$admission_id'>\n";
 		echo "\t\t<input type='hidden' id='posted' name='posted' value='true'>\n";
 			
 			/* 	Går igenom varje rad och skriver ut motsvarande label/input taggar. Alltså 
