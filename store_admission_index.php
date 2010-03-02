@@ -19,11 +19,20 @@
 	//if-sats som kollar om formuläret har submittats
 	if (isset($_POST['submit_admission'])) {
 		
-		$admission_input['last_application_date'] = $_POST['last_application_date'];
-		$admission_input['last_completion_date'] 	= $_POST['last_completion_date'];
-		$admission_input['year'] 									= $_POST['year'];
-		$admission_input['semester'] 							= $_POST['semester'];
+		$last_app 	= $_POST['last_application_date'];
+		$last_comp 	= $_POST['last_completion_date'];
+		$admission_input['year'] = $_POST['year'];
+		$admission_input['semester'] = $_POST['semester'];
 		
+		//if-sats som ser till att sista ansökningsdag är tidigare än sista kompletteringsdag. Om det inte är det byter vi plats på dom.
+		if($last_app > $last_comp) {
+			$temp = $last_comp;
+			$last_comp = $last_app;
+			$last_app = $temp;
+			echo "Gissningsvis var datumen i fel ordning s&aring; vi bytte plats p&aring; dem. Hoppas det var r&auml;tt.";
+		}
+		$admission_input['last_completion_date'] = $last_comp;
+		$admission_input['last_application_date'] = $last_app;
 		store_admission($admission_input,$conn);
 
 		$admission_id = get_admission_id($admission_input,$conn);
