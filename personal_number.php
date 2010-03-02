@@ -1,4 +1,4 @@
-<?php
+<?php $conn = db_connect();
 ?>
 
 	<<??>?xml version="1.0" encoding="UTF-8"?>
@@ -21,9 +21,9 @@
 					<label for="admission_id">Intag</label>
 					<select name="admission_id" id="admission_id" >
 						<?php
-							$admissions = get_admissions();
+							$admissions = get_admissions($conn);
 							foreach ($admissions as $admission) {
-								echo "<option value='{$admission['id']}'>{$admission['semester']},{$admission['year']}</option>";
+								echo "<option value='{$admission['id']}'>{$admission['semester']} {$admission['year']}</option>";
 							}
 						?>
 					</select>

@@ -6,7 +6,7 @@
 		
 		$query = 	"SELECT id, semester, year
 					FROM admission
-					SORT BY id";
+					ORDER BY year ASC,semester DESC";
 					
 		$answer = handle_mysql_query($query, $conn);
 		$result;
