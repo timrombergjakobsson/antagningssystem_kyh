@@ -1,8 +1,5 @@
 <?php
-	/* funktion som lägger in personinformation på sökande och ävern kollar om sökande finns. 
-	INSERT INTO lägger in informationen på sökande i databasen. ON DUPLICATE KEY kollar om
-	personnummer redan finns.  Om det finns så hämtar den ut all information utom personnummer 
-	för eventuell editering. */
+	/* */
 	function store_applicant($input,$conn) {
 		/* */
 		$query = "	INSERT INTO applicant (	
@@ -29,8 +26,7 @@
 						'{$input["mobile"]}', 
 						'{$input["e_mail"]}'
 					)
-					//Kollar om personnummer redan finns och ger en möjlighet att editera övrig info.
-					ON DUPLICATE KEY UPDATE 
+					ON DUPLICATE KEY UPDATE
 						`surname` 		= '{$input["surname"]}', 
 						`firstname` 	= '{$input["firstname"]}', 
 						`co_address` 	= '{$input["co_address"]}', 
@@ -41,7 +37,7 @@
 						`mobile` 		= '{$input["mobile"]}', 
 						`e_mail` 		= '{$input["e_mail"]}'
 					";
-		//returnerar funktionen som hanterar mysql_query felmeddelanden.
-		$answer = handle_mysql_query($query,$conn); 
+		
+		$answer = handle_mysql_query($query,$conn);
 		return $answer;
 	}

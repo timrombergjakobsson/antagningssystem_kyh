@@ -1,16 +1,16 @@
 <?php
 	//alla includes inkluderar filer i dokumentet.
-	include('handle_mysql_query.php');
+	include('./functions/handle_mysql_query.php');
 	
-	include('db_connect.php');
+	include('./functions/db_connect.php');
 	
-	include('admission_info_form.php');
+	include('./forms/admission_info_form.php');
 	
-	include('get_admission_id.php');
+	include('./functions/get_admission_id.php');
 	
-	include('store_education_start.php');
+	include('./functions/store_education_start.php');
 	
-	include('store_admission.php');
+	include('./functions/store_admission.php');
 
 
 	//sparar en connection till databasen i $conn som kan användas i vilken funktion som helst.
