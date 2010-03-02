@@ -2,7 +2,7 @@
 // skall returnera allt ifrån education tabellen som hör ihop med ett visst intag.
 function get_education_starts($admission_id,$conn){
 	
-		$query = 	"SELECT `education`.id, name, city
+		$query = 	"SELECT `education_start`.id, name, city
 					FROM education_start, education
 					WHERE `education`.id = education_id
 					AND admission_id = $admission_id";

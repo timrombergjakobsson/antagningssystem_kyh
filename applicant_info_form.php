@@ -5,7 +5,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
 	<title>Användarinfo</title>
-	<link href="style.css" media="screen" type="text/css" rel="stylesheet"/>
+	<link href="./css/style.css" media="screen" type="text/css" rel="stylesheet"/>
 	
 </head>
 
@@ -36,7 +36,7 @@
 		/* En associativ array för att spara hur databaskolumnen, texten, och id:et för css:en hör ihop för varje inmatningsfält */
 		$personal_list = Array(
 						Array('db_column' => "surname", 		'id' => "surname",			'text' => "Efternamn"),	
-						Array('db_column' => "firstname", 		'id' => "firstname",		'text' => "Förnamn"),	
+						Array('db_column' => "firstname", 		'id' => "firstname",		'text' => "F&ouml;rnamn"),	
 						Array('db_column' => "co_address", 		'id' => "co_address",		'text' => "c/o Adress"),
 						Array('db_column' => "address", 		'id' => "address",			'text' => "Adress"),
 						Array('db_column' => "postal_code", 	'id' => "postal_code",		'text' => "Postnummer"),
@@ -49,7 +49,7 @@
 		/* Formuläret. */
 		echo "<form action='' method='post'>\n";
 		echo "\t<fieldset>\n";
-		echo "\t<legend>Personinformation för $personal_number</legend>\n";
+		echo "\t<legend>Personinformation f&ouml;r $personal_number</legend>\n";
 		/* Ett gömt fält som säger när en användare har  skickat data. */
 		echo "\t\t<input type='hidden' id='personal_number' name='personal_number' value='$personal_number'>\n";
 			echo "\t\t<input type='hidden' id='admission_id' name='admission_id' value='$admission_id'>\n";
@@ -65,7 +65,7 @@
 		foreach($personal_list as $row){
 			/* Label - Input taggar (med försök till rätt indentering i den genererade html-filen). */
 			echo "\t\t<label for='{$row['id']}'>{$row['text']}</label>\n";
-			echo "\t\t<input type='text' id='{$row['id']}' name='{$row['db_column']}' value='{$personal_data[$row['db_column']]}' />";
+			echo "\t\t<input class='focus' type='text' id='{$row['id']}' name='{$row['db_column']}' value='{$personal_data[$row['db_column']]}' />";
 		}
 		/* Submitknapp. */
 		echo "\t\t<label for='submit'></label>";
