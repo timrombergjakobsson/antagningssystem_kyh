@@ -85,18 +85,11 @@ INSERT INTO `admission` (
 )
 VALUES (
 	66 , 
-	NULL , 
-	NULL ,  
+	'20081119' , 
+	'20081212' ,  
 	2009 , 
 	'VT'
-	), 
-	(
-	1 , 
-	NULL , 
-	NULL , 
-	NULL , 
-	NULL   
-);
+	);
 
 
 -- -----------------------------------------------------
@@ -274,6 +267,7 @@ CREATE TABLE `application` (
   `work_points` DECIMAL(2,1) NULL ,
   `education_start_id` INT NOT NULL ,
   PRIMARY KEY (`id`) ,
+	UNIQUE KEY(`application_occasion_id`, `education_start_id`) ,
   INDEX `fk_application_application_occasion` (`application_occasion_id` ASC) ,
   INDEX `fk_application_education_start` (`education_start_id` ASC ) ,
   CONSTRAINT `fk_application_application_occasion`
