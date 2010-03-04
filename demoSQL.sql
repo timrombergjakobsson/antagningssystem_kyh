@@ -1,24 +1,29 @@
-﻿-- Tabelldefinition.
--- notera att vi har en konstgjord huvudnyckel
--- istället har vi valt att låta personnumret vara unikt.
+﻿-- Tabelldefinition för ansökande.
+-- Notera att vi har en konstgjord huvudnyckel och
+-- vi har valt att låta personnumret vara unikt.
 -- Det är bättre då personnummret är en sträng.
 DROP TABLE IF EXISTS `applicant`;
 CREATE TABLE `applicant` (
-  `id` INT NOT NULL AUTO_INCREMENT ,
-  `personal_number` VARCHAR(12) UNIQUE NOT NULL , -- <------------------
-  `surname` VARCHAR(45) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL ,
-  `firstname` VARCHAR(45) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL ,
-  `address` VARCHAR(100) CHARACTER SET utf8 COLLATE utf8_bin NULL,
-  `e_mail` VARCHAR(45) CHARACTER SET utf8 COLLATE utf8_bin NULL,
-  -- more column definitions here... ,
+  `id` 				INT 			NOT NULL AUTO_INCREMENT ,
+  `personal_number` VARCHAR(12) 	UNIQUE NOT NULL , -- <------------------
+  `surname` 		VARCHAR(45) 	NOT NULL ,
+  `firstname` 		VARCHAR(45) 	NOT NULL ,
+  `address` 		VARCHAR(100)	NULL,
+  `e_mail` 			VARCHAR(45) 	NULL,
+  -- more column definitions here... 
+  -- vi har 'CHARACTER SET utf8 COLLATE utf8_bin' på alla VARCHAR.
   PRIMARY KEY (`id`) 
 )ENGINE = InnoDB CHARACTER SET utf8 COLLATE utf8_bin;
 
+-- Observera att vårt formulär för ansökande visar den information som
+-- finns för deet angivna personnumret, och tomt om det inte redan finns. 
+
 -- SQL-fråga för att lägga in en ansökande.
--- Om personen har ett nytt personnummer, 
--- så lägger vi in datan i en ny rad,
--- annars så uppdaterar vi alla kolumner för den raden,
+-- Vi vill lägga in datan i en ny rad,
+-- om personen har ett nytt personnummer. 
+-- Annars så uppdaterar vi alla kolumner för den raden,
 -- förutom id:et och personnumret(som är unikt).
+-- Syntaxen blir då:
 INSERT INTO applicant (	
 	`personal_number`,
 	`surname` , 
@@ -28,18 +33,18 @@ INSERT INTO applicant (
 	-- more columns here... 
 ) 
 VALUES (
-	'{$input["personal_number"]}',
-	'{$input["surname"]}', 
-	'{$input["firstname"]}',  
-	'{$input["address"]}', 
-	'{$input["e_mail"]}', 
+	'$personal_number',
+	'$surname', 
+	'$firstname',  
+	'$address', 
+	'$e_mail', 
 	-- ...
 )
 ON DUPLICATE KEY UPDATE -- <------------------
-	`surname` 		= '{$input["surname"]}', 
-	`firstname` 	= '{$input["firstname"]}',  
-	`address` 		= '{$input["address"]}', 
-	`e_mail` 		= '{$input["e_mail"]}' ,
+	`surname` 		= '$surname', 
+	`firstname` 	= '$firstname',  
+	`address` 		= '$address', 
+	`e_mail` 		= '$e_mail' ,
 	-- ... 
 ;
 
@@ -49,4 +54,4 @@ ON DUPLICATE KEY UPDATE -- <------------------
 -- rad där ett unikt/a värden som redan finns, 
 -- läggs inget till och den ger inget sql-fel.  
 -- Syntaxen är för IGNORE:
-INSERT IGNORE INTO applicant ( -- ...
+INSERT IGNORE INTO applicant ( -- p.s.s. ...
